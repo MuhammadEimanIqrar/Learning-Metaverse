@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Movements from './movements';
 
 // Declaration of a new scene with Three.js
 const scene = new THREE.Scene();
@@ -36,9 +37,9 @@ cone.position.set(10, 5, 0);
 scene.add(cone);
 
 // Geometry figure to be represented in the Metaverse: Cone
-const geometry_cylinder = new THREE.CylinderGeometry( 5, 5, 5, 32 ); 
-const material_cylinder = new THREE.MeshBasicMaterial( {color: 0x0303fc} ); 
-const cylinder = new THREE.Mesh( geometry_cylinder, material_cylinder ); scene.add( cylinder );
+const geometry_cylinder = new THREE.CylinderGeometry(5, 5, 5, 32);
+const material_cylinder = new THREE.MeshBasicMaterial({ color: 0x0303fc });
+const cylinder = new THREE.Mesh(geometry_cylinder, material_cylinder); scene.add(cylinder);
 cylinder.position.set(-10, 5, 0);
 scene.add(cylinder);
 
@@ -64,6 +65,30 @@ function animate() {
     animation_cylinder();
 
     requestAnimationFrame(animate);
+
+    // Movement to the left
+    if (Movements.isPressed(37)) {
+        camera.position.x -= 0.5;
+    }
+
+    // Upward Movement
+    if (Movements.isPressed(38)) {
+        camera.position.x += 0.5;
+        camera.position.y += 0.5;
+    }
+
+    // Movement to the right
+    if (Movements.isPressed(39)) {
+        camera.position.x += 0.5;
+    }
+
+    // Downward Movement
+    if (Movements.isPressed(40)) {
+        camera.position.x -= 0.5;
+        camera.position.y -= 0.5;
+    }
+
+    camera.lookAt(space.position);
     renderer.render(scene, camera);
 }
 animate();
